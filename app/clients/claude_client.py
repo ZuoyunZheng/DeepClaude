@@ -103,6 +103,13 @@ class ClaudeClient(BaseClient):
                 else model_arg[0],  # Claude仅支持temperature与top_p
                 "top_p": model_arg[1],
             }
+        elif self.provider == "google":
+            headers = {
+                "Content-Type": "application/json",
+            }
+            data = {
+                "contents": [{"role": m["role"], "parts": [{"text": m["content"]}]} for m in messages]
+            }
         else:
             raise ValueError(f"不支持的Claude Provider: {self.provider}")
 
@@ -137,6 +144,10 @@ class ClaudeClient(BaseClient):
                                     content = data.get("delta", {}).get("text", "")
                                     if content:
                                         yield "answer", content
+                            elif self.provider == "google":
+                                content = data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                                if content:
+                                    yield "answer", content
                             else:
                                 raise ValueError(
                                     f"不支持的Claude Provider: {self.provider}"
