@@ -40,7 +40,7 @@ class ClaudeClient(BaseClient):
 
         if self.provider == "openrouter":
             # 转换模型名称为 OpenRouter 格式
-            model = "anthropic/claude-3.5-sonnet"
+            #model = "anthropic/claude-3.5-sonnet"
                 
             headers = {
                 "Authorization": f"Bearer {self.api_key}",

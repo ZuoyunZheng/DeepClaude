@@ -51,17 +51,29 @@ class DeepSeekClient(BaseClient):
                 内容类型: "reasoning" 或 "content"
                 内容: 实际的文本内容
         """
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json",
-            "Accept": "text/event-stream",
-        }
+
+        headers = {}
+        if self.provider == "deepseek":
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+                "Accept": "text/event-stream",
+            }
+        elif self.provider == "openrouter":
+            # 转换模型名称为 OpenRouter 格式
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+                "HTTP-Referer": "https://github.com/ErlichLiu/DeepClaude",  # OpenRouter 需要
+                "X-Title": "DeepClaude"  # OpenRouter 需要
+            }
+
         data = {
             "model": model,
             "messages": messages,
             "stream": True,
         }
-        
+
         logger.debug(f"开始流式对话：{data}")
 
         accumulated_content = ""
