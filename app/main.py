@@ -19,6 +19,7 @@ app = FastAPI(title="DeepClaude API")
 ALLOW_ORIGINS = os.getenv("ALLOW_ORIGINS", "*")
 
 CLAUDE_API_KEY = os.getenv("CLAUDE_API_KEY")
+<<<<<<< HEAD
 ENV_CLAUDE_MODEL = os.getenv("CLAUDE_MODEL")
 CLAUDE_PROVIDER = os.getenv(
     "CLAUDE_PROVIDER", "anthropic"
@@ -30,6 +31,7 @@ DEEPSEEK_API_URL = os.getenv(
     "DEEPSEEK_API_URL", "https://api.deepseek.com/v1/chat/completions"
 )
 DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-reasoner")
+DEEPSEEK_PROVIDER = os.getenv("DEEPSEEK_PROVIDER")
 
 IS_ORIGIN_REASONING = os.getenv("IS_ORIGIN_REASONING", "True").lower() == "true"
 
@@ -55,6 +57,7 @@ deep_claude = DeepClaude(
     DEEPSEEK_API_KEY,
     CLAUDE_API_KEY,
     DEEPSEEK_API_URL,
+    DEEPSEEK_PROVIDER,
     CLAUDE_API_URL,
     CLAUDE_PROVIDER,
     IS_ORIGIN_REASONING,
